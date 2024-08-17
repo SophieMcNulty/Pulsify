@@ -12,19 +12,28 @@ router.post('/search', async (req, res) => {
         res.json({ result: false, error: 'Champs vides ou manquants' });
         return;
     }
-
+    // if (req.body.keyword.length < 2) {
+    //     res.json({ result: false, error: 'Mot clé trop court, tapez deux charactères.' })
+    //     return;
+    // }
     const fetchAllKeywords = await Keyword.find({ keyword: { $regex: new RegExp(req.body.keyword.toLowerCase(), "i") } })
 
     if (fetchAllKeywords.length) {
         const prompts = []
 
-        for (const populatePrompts of fetchAllKeywords) {
-            const populatedPrompts = await populatePrompts.populate('prompts')
-            for (const userIdInPrompt of populatedPrompts.prompts) {
-                const userIdInPromptPopulated = await userIdInPrompt.populate('userId')
-                userIdInPromptPopulated.isPublic && prompts.push(userIdInPromptPopulated)
+        for (const keyword of fetchAllKeywords) {
+            const populatedPrompts = await keyword.populate('prompts')
+            for (const prompt of populatedPrompts.prompts) {
+                if (prompt.isPublic) {
+                    const promptWithUserId = await prompt.populate('userId')
+                    prompts.push(promptWithUserId)
+                }
+
             }
+
         }
+
+        console.log('prompts :', prompts.length)
         if (prompts.length) {
             res.json({ result: true, keywordsList: prompts })
         } else {

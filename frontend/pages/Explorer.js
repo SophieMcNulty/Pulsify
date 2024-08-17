@@ -26,6 +26,7 @@ function Explorer() {
     const [allGenres, setAllGenres] = useState([]);
     const [discover, setDiscover] = useState(false);
     const [reRender, setReRender] = useState(false);
+    const [debounceTimer, setDebounceTimer] = useState(0)
 
     const dispatch = useDispatch();
     const router = useRouter()
@@ -143,27 +144,29 @@ function Explorer() {
     let colorUp = sortUp ? '#504E6B' : undefined
     let colorDown = sortDown ? '#504E6B' : undefined
 
-    // Fonction qui permet d'appeler les fonctions de Fetch en fonction du filtre sur la page 
+    const handleSearch = () => {
+        if (checkedAutor) {
+            fetchAutor()
+        } else if (checkedProject) {
+            fetchProject()
+        } else if (checkedGenre) {
+            fetchGenre()
+        } else if (checkedKeyword) {
+            fetchKeyword()
+        }
+    }
+
+
+    // Instauration d'un debounce dans la fonction search.
     const fetchSearch = () => {
         setDiscover(false)
         setSortUp(false)
         setSortDown(false)
-        if (checkedAutor) {
-            fetchAutor()
-            return
-        }
-        if (checkedProject) {
-            fetchProject()
-            return
-        }
-        if (checkedGenre) {
-            fetchGenre()
-            return
-        }
-        if (checkedKeyword) {
-            fetchKeyword()
-            return
-        }
+        clearTimeout(debounceTimer)
+        let timer = setTimeout(() => {
+            handleSearch()
+        }, 2000);
+        setDebounceTimer(timer)
     }
 
     // Récupération des auteurs 
@@ -220,6 +223,8 @@ function Explorer() {
         }
     }
 
+
+
     // Récupération des projets soit pour la recherche soit pour l'affichage des suggestions
     const fetchGenre = async (genre) => {
         setDiscover(false)
@@ -260,7 +265,7 @@ function Explorer() {
 
     useEffect(() => {
         getAllLikedPosts();
-    }, [search, reRender])
+    }, [])
 
     const refresh = () => {
         setReRender(!reRender);
@@ -279,6 +284,8 @@ function Explorer() {
     // Affichage du message d'erreur en fonction de la recherche, s'adapte à ce qui est retourné par la route
     let error = errorSearch && <h4 style={{ color: 'red', fontWeight: 'normal', fontStyle: 'italic', display: 'flex', justifyContent: 'center' }}>{errorMessage}</h4>
 
+
+
     return (
         <>
             <Header></Header>
@@ -288,7 +295,10 @@ function Explorer() {
 
 
                 <div className={styles.containerSearch}>
-                    <input type='string' placeholder={placeHolder} onChange={(e) => { setSearch(e.target.value); setErrorSearch(false); setListProject([]); }} value={search} className={styles.inputSearch} />
+                    <input type='string' placeholder={placeHolder}
+                        onChange={(e) => { setSearch(e.target.value); setErrorSearch(false); setListProject([]); }}
+                        value={search} className={styles.inputSearch} />
+
                     <div className={styles.containerIcon}>
                         <Popover
                             isOpen={isPopoverOpen}
