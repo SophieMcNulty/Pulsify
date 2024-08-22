@@ -26,7 +26,8 @@ function Explorer() {
     const [allGenres, setAllGenres] = useState([]);
     const [discover, setDiscover] = useState(false);
     const [reRender, setReRender] = useState(false);
-    const [debounceTimer, setDebounceTimer] = useState(0)
+    const [debounceTimer, setDebounceTimer] = useState(0);
+    const [abortController, setAbortController] = useState(null)
 
     const dispatch = useDispatch();
     const router = useRouter()
@@ -189,20 +190,33 @@ function Explorer() {
 
     // Récupération des mots clés
     const fetchKeyword = async () => {
-        const { email, token } = user;
-        const fetchKeyWord = await fetch('http://localhost:3000/keywords/search', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ keyword: search, email, token }),
-        })
-        const res = await fetchKeyWord.json()
-        if (res.result) {
-            setListProject(res.keywordsList)
-            setErrorSearch(false)
-        } else {
-            setErrorSearch(true)
-            setErrorMessage(res.error)
+        console.log('fetchkeywords search ', search)
+        if (abortController) {
+            abortController.abort()
         }
+        const newAbortController = new AbortController()
+        setAbortController(newAbortController);
+        try {
+            const { email, token } = user;
+            const fetchKeyWord = await fetch('http://localhost:3000/keywords/search', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ keyword: search, email, token }),
+                signal: newAbortController.signal,
+            })
+            const res = await fetchKeyWord.json()
+            if (res.result) {
+                setListProject(res.keywordsList)
+                setErrorSearch(false)
+            } else {
+                setErrorSearch(true)
+                setErrorMessage(res.error)
+            }
+        }
+        catch (error) {
+            console.log('error :', error)
+        }
+
     }
 
     // Récupération des projets 

@@ -12,10 +12,7 @@ router.post('/search', async (req, res) => {
         res.json({ result: false, error: 'Champs vides ou manquants' });
         return;
     }
-    // if (req.body.keyword.length < 2) {
-    //     res.json({ result: false, error: 'Mot clé trop court, tapez deux charactères.' })
-    //     return;
-    // }
+
     const fetchAllKeywords = await Keyword.find({ keyword: { $regex: new RegExp(req.body.keyword.toLowerCase(), "i") } })
 
     if (fetchAllKeywords.length) {

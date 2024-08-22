@@ -33,6 +33,7 @@ function SignUp() {
     user.token && router.push({ pathname: '/Accueil' });
 
 
+    // Change le mot de passe en invisible/visible et l'icone associée.
     let passwordEye;
     let rePasswordEye
     if (showPassword) {
@@ -47,6 +48,7 @@ function SignUp() {
         rePasswordEye = <FontAwesomeIcon icon={faEyeSlash} onClick={() => setShowRePassword(!showRePassword)} className={styles.userSection} />;
     }
 
+    // Appel le backend pour créer un utilisateur dans la base de donnée.
     const createAccount = async () => {
         const fetchSignin = await fetch('http://localhost:3000/users/signup', {
             method: 'POST',
@@ -69,6 +71,7 @@ function SignUp() {
     const nameMessage = <span className={styles.messages}>Prénom invalide</span>
     const errorMessage = <span>Erreur server</span>
 
+    // Check la validité de l'email, du password et des userNames.
     const checkForm = () => {
         const pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         if (pattern.test(email) && email !== "") {
