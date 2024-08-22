@@ -30,7 +30,7 @@ function Profil() {
 
   const getAllLikedPosts = () => {
     const { email, token } = user;
-    fetch(`${process.env.FETCH_URL}/users/likedPosts`, {
+    fetch(`${process.env.NEXT_PUBLIC_FETCH_URL}/users/likedPosts`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, token })
@@ -54,7 +54,8 @@ function Profil() {
 
   const clickBibliotheque = () => {
     if (user.token) {
-      fetch(`${process.env.FETCH_URL} / users / projets`, {
+      console.log('.env ', process.env.NEXT_PUBLIC_FETCH_URL)
+      fetch(`http://localhost:3000/users/projets`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: user.email, token: user.token })

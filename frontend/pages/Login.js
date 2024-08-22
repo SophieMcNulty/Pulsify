@@ -9,6 +9,9 @@ import { useRouter } from 'next/router';
 
 function Login() {
   const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
+  console.log("clientId :", clientId)
+  const url = process.env.NEXT_PUBLIC_FETCH_URL
+  console.log("url :", url)
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorLogin, setErrorLogin] = useState(false);
@@ -41,7 +44,7 @@ function Login() {
   />
 
   const connexionGoogle = async (emailGoogle, firstname, username, picture, googleId) => {
-    const fetchLogin = await fetch(`${process.env.FETCH_URL}/users/signup/google`, {
+    const fetchLogin = await fetch(`${process.env.NEXT_PUBLIC_FETCH_URL}/users/signup/google`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email: emailGoogle, username: username, firstname: firstname, google_id: googleId, picture: picture }),
@@ -56,7 +59,7 @@ function Login() {
   }
 
   const connexion = async () => {
-    const fetchLogin = await fetch(`${process.env.FETCH_URL} / users / signin`, {
+    const fetchLogin = await fetch(`${process.env.NEXT_PUBLIC_FETCH_URL}/users/signin`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email: email, password: password }),

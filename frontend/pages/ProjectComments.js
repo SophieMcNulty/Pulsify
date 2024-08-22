@@ -36,7 +36,7 @@ function ProjectComments() {
     // Appel la route qui enregistre le commentaire en sous document dans le projet
     const postComment = async () => {
         const { email, token } = user;
-        const postCommentInBD = await fetch(`${process.env.FETCH_URL}/projects/comment`, {
+        const postCommentInBD = await fetch(`${process.env.NEXT_PUBLIC_FETCH_URL}/projects/comment`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ id, comment, email, token }),
@@ -65,7 +65,7 @@ function ProjectComments() {
     // Fonction qui appelle la route qui récupère les commentaires du projet
     const fetchProjectData = async (id) => {
         const { email, token } = user;
-        const fetchData = await fetch(`${process.env.FETCH_URL}/projects/ProjectById`, {
+        const fetchData = await fetch(`${process.env.NEXT_PUBLIC_FETCH_URL}/projects/ProjectById`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ id, email, token }),

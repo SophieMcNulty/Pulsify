@@ -35,7 +35,7 @@ function Accueil() {
     const fetchProjects = async () => {
         // Fetch des projets 
         const { email, token } = user;
-        const fetchProject = await fetch(`${process.env.FETCH_URL}/genres/searchMyGenres`, {
+        const fetchProject = await fetch(`${process.env.NEXT_PUBLIC_FETCH_URL}/genres/searchMyGenres`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ search, email, token }),
@@ -48,7 +48,7 @@ function Accueil() {
     const fetchCommunityProjects = async () => {
         // Fetch des projets 
         const { email, token } = user;
-        const fetchProject = await fetch(`${process.env.FETCH_URL} / genres / searchLikedGenres`, {
+        const fetchProject = await fetch(`${process.env.NEXT_PUBLIC_FETCH_URL}/genres/searchLikedGenres`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ search: searchCommunity, email, token }),
@@ -71,7 +71,7 @@ function Accueil() {
     // Fonction pour supprimer un genre et tous les mots-clés associés.
     const handleRemoveGenre = async (genre) => {
         const { email, token } = user;
-        const removedGenre = await fetch(`${process.env.FETCH_URL}/genres/removeGenre`, {
+        const removedGenre = await fetch(`${process.env.NEXT_PUBLIC_FETCH_URL}/genres/removeGenre`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ genre, email, token }),

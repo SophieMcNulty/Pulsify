@@ -46,7 +46,7 @@ function Explorer() {
     // Récupération de toutes les genres 
     const foundAllGenres = async () => {
         const { token, email } = user;
-        const foundGenres = await fetch(`${process.env.FETCH_URL}/genres/allGenres`, {
+        const foundGenres = await fetch(`${process.env.NEXT_PUBLIC_FETCH_URL}/genres/allGenres`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ token, email }),
@@ -62,7 +62,7 @@ function Explorer() {
 
     const getAllLikedPosts = async () => {
         const { email, token } = user;
-        fetch(`${process.env.FETCH_URL} / users / likedPosts`, {
+        fetch(`${process.env.NEXT_PUBLIC_FETCH_URL}/users/likedPosts`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, token })
@@ -173,7 +173,7 @@ function Explorer() {
     // Récupération des auteurs 
     const fetchAutor = async () => {
         const { email, token } = user;
-        const fetchAutor = await fetch(`${process.env.FETCH_URL}/users/search`, {
+        const fetchAutor = await fetch(`${process.env.NEXT_PUBLIC_FETCH_URL}/users/search`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username: search, token, email }),
@@ -198,7 +198,7 @@ function Explorer() {
         setAbortController(newAbortController);
         try {
             const { email, token } = user;
-            const fetchKeyWord = await fetch(`${process.env.FETCH_URL} / keywords / search`, {
+            const fetchKeyWord = await fetch(`${process.env.NEXT_PUBLIC_FETCH_URL}/keywords/search`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ keyword: search, email, token }),
@@ -222,7 +222,7 @@ function Explorer() {
     // Récupération des projets 
     const fetchProject = async () => {
         const { email, token } = user;
-        const fetchProject = await fetch(`${process.env.FETCH_URL}/projects/searchTitle`, {
+        const fetchProject = await fetch(`${process.env.NEXT_PUBLIC_FETCH_URL}/projects/searchTitle`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ title: search, email, token }),
@@ -246,7 +246,7 @@ function Explorer() {
         if (genre) {
             // Récupération des projets pour la suggestion de recherche 
             setSearch(genre)
-            const fetchProject = await fetch(`${process.env.FETCH_URL} / genres / searchGenre`, {
+            const fetchProject = await fetch(`${process.env.NEXT_PUBLIC_FETCH_URL}/genres/searchGenre`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ genre, email, token }),
@@ -261,7 +261,7 @@ function Explorer() {
             }
         } else {
             // Récupération des projets pour la recherche
-            const fetchProject = await fetch(`${process.env.FETCH_URL}/genres/searchGenre`, {
+            const fetchProject = await fetch(`${process.env.NEXT_PUBLIC_FETCH_URL}/genres/searchGenre`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ genre: search, email, token }),
