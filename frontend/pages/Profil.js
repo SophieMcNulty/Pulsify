@@ -54,8 +54,7 @@ function Profil() {
 
   const clickBibliotheque = () => {
     if (user.token) {
-      console.log('.env ', process.env.NEXT_PUBLIC_FETCH_URL)
-      fetch(`http://localhost:3000/users/projets`, {
+      fetch(`${process.env.NEXT_PUBLIC_FETCH_URL}/users/projets`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: user.email, token: user.token })
@@ -110,7 +109,6 @@ function Profil() {
   }).reverse()
 
   const communityMap = communityList.map((data, i) => {
-    console.log('data.id :', data._id)
     return (
       <div className={styles.promptCard}>
         <PromptCard

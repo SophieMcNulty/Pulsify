@@ -9,9 +9,6 @@ import { useRouter } from 'next/router';
 
 function Login() {
   const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
-  console.log("clientId :", clientId)
-  const url = process.env.NEXT_PUBLIC_FETCH_URL
-  console.log("url :", url)
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorLogin, setErrorLogin] = useState(false);

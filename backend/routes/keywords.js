@@ -30,7 +30,6 @@ router.post('/search', async (req, res) => {
 
         }
 
-        console.log('prompts :', prompts.length)
         if (prompts.length) {
             res.json({ result: true, keywordsList: prompts })
         } else {

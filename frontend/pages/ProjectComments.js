@@ -42,9 +42,7 @@ function ProjectComments() {
             body: JSON.stringify({ id, comment, email, token }),
         })
         const res = await postCommentInBD.json()
-        console.log('res :', res)
         if (res.result) {
-            console.log('comment :', comment)
             setCommentsList([...commentsList, res.newComment])
             fetchProjectData(id)
             setComment('')
@@ -57,7 +55,6 @@ function ProjectComments() {
     useEffect(() => {
         if (id) {
             fetchProjectData(id)
-            console.log('Project ID:', id);
         }
     }, [id]);
 

@@ -190,7 +190,6 @@ function Explorer() {
 
     // Récupération des mots clés
     const fetchKeyword = async () => {
-        console.log('fetchkeywords search ', search)
         if (abortController) {
             abortController.abort()
         }
