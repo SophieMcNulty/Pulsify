@@ -170,7 +170,6 @@ function PromptCard(props) {
                     <div className={styles.genre}>
                         {props.genre}
                     </div>
-
                     <div className={styles.score} >
                         <FontAwesomeIcon icon={faStar} className={props.stars >= 1 ? styles.star : styles.starGrey} />
                         <FontAwesomeIcon icon={faStar} className={props.stars >= 2 ? styles.star : styles.starGrey} />
@@ -193,9 +192,7 @@ function PromptCard(props) {
                         </div>
                     </div>
                 </div>
-
             </div>
-
         </div >
 
     );

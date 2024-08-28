@@ -58,11 +58,8 @@ router.post("/add", async (req, res) => {
     const keywords = [];
 
     for (const wordToFormat of splittedKeywords) {
-
         const trimmedWords = wordToFormat.trim();
-
         if (trimmedWords) {
-
             keywords.push(trimmedWords.charAt(0).toUpperCase() + trimmedWords.slice(1));
 
         }
@@ -71,15 +68,10 @@ router.post("/add", async (req, res) => {
     // Créer un tableau des id présents en clé étrangère pour le keyword s'il n'existe pas. S'il existe, on rajoute les keywords dans ses related_keywords.
     const existingKeywordIds = [];
     const newKeywordIds = [];
-
     for (const word of keywords) {
-
         const foundExistingKeyword = await Keyword.findOne({ keyword: word, userId: foundUser._id, genre: req.body.genre });
-
         if (foundExistingKeyword) {
-
             existingKeywordIds.push(foundExistingKeyword._id);
-
         } else {
 
             const newKeyword = new Keyword({
@@ -91,7 +83,6 @@ router.post("/add", async (req, res) => {
                 genre: req.body.genre
             });
             const savedKeyword = await newKeyword.save();
-
             newKeywordIds.push(savedKeyword._id);
         }
     }
@@ -110,7 +101,6 @@ router.post("/add", async (req, res) => {
                 $push: { related_keywords: allKeywordsIdsOfThisGenre }
             });
         }
-
     }
 
     // Si il y a déjà des related_keywords pour ce projet, ajoute ceux qui n'y sont pas déjà.
@@ -125,7 +115,6 @@ router.post("/add", async (req, res) => {
                 }
             }
             const updateRelatedKeywordId = [...populatedKeyword.related_keywords, ...checkIntoNewIdsIfTheyArentPresent];
-
             let resultAverageRating = 0;
             const promptKeywordsCount = (populatedKeyword.prompts).length;
             for (const prompt of populatedKeyword.prompts) {
@@ -147,7 +136,6 @@ router.post("/add", async (req, res) => {
             }
         }
     }
-
     res.json({ result: true, prompt: savedProject });
 })
 
